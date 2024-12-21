@@ -1,6 +1,8 @@
 import {SafeAreaView, View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
+import {postLogin} from "../services/Auth/Auth.ts";
+import {LoginResponseParams} from "../services/Auth/authInterface.ts";
 
 function LoginScreen() {
     const { control, handleSubmit, formState: { errors } } = useForm<FormProps>();
@@ -8,8 +10,7 @@ function LoginScreen() {
     const onSubmit = async  (data: FormProps) => {
         console.log('Form Data:', data);
         try {
-            const response = await axios.post('http://localhost:3000/authen/login', data);
-
+            const response = await postLogin(data);
             // Example: Extract data from the response
             if (response.status === 200) {
                 console.log('Login success: ', JSON.stringify(response.data, null,2));
